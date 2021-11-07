@@ -1,4 +1,4 @@
-name: main & pr
+name: test
 
 on:
   pull_request:
