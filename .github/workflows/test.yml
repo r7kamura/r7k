@@ -25,6 +25,7 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt, clippy
+      - uses: r7kamura/rust-problem-matchers@v1
       - uses: actions-rs/cargo@v1
         name: cargo fmt
         with:
