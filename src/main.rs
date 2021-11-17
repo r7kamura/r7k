@@ -1,9 +1,11 @@
 mod client;
 mod handlers;
 mod models;
+mod opt;
 mod parser;
 mod path_finder;
 
+use crate::opt::Opt;
 use actix_files::Files;
 use actix_web::web::get;
 use actix_web::{App, HttpServer};
@@ -19,16 +21,6 @@ async fn main() -> std::io::Result<()> {
         Opt::Serve {} => run()?.await,
         Opt::Build {} => build().await,
     }
-}
-
-#[derive(Debug, StructOpt)]
-#[structopt(about = "Powers r7kamura.com.")]
-enum Opt {
-    #[structopt(about = "Build static files.")]
-    Build {},
-
-    #[structopt(about = "Run HTTP server.")]
-    Serve {},
 }
 
 async fn build() -> std::io::Result<()> {
