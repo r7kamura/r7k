@@ -21,14 +21,11 @@ impl Client {
             canonical_path.push_str("index");
         }
         if let Some(content_type) = headers.get("Content-Type") {
-            if String::from_utf8(content_type.as_ref().to_vec())
-                .unwrap()
-                .starts_with("text/html")
-            {
+            if String::from_utf8(content_type.as_ref().to_vec())?.starts_with("text/html") {
                 canonical_path.push_str(".html");
             }
         };
-        let body = response.body().limit(10485760).await.unwrap();
+        let body = response.body().limit(10485760).await?;
         Ok((body, canonical_path))
     }
 }
