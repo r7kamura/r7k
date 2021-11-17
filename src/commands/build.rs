@@ -1,11 +1,12 @@
 use crate::client::Client;
-use crate::commands::run;
 use crate::path_finder;
+use crate::result::Result;
+use crate::server::run;
 use std::fs;
 use std::path::Path;
 
-pub async fn build() -> std::io::Result<()> {
-    let _ = run().unwrap();
+pub async fn build() -> Result<()> {
+    let _ = run()?;
     let client = Client::new();
     for path in path_finder::all() {
         println!("{}", path);

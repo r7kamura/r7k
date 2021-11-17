@@ -1,9 +1,10 @@
 use crate::handlers::{list_links, show_article, show_feed, show_sitemap, show_top_page};
+use crate::result::Result;
 use actix_files::Files;
 use actix_web::web::get;
 use actix_web::{App, HttpServer};
 
-pub fn run() -> std::io::Result<actix_web::dev::Server> {
+pub fn run() -> Result<actix_web::dev::Server> {
     let server = HttpServer::new(move || {
         App::new()
             .route("/", get().to(show_top_page))
