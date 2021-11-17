@@ -1,8 +1,10 @@
+use crate::error::Error;
+use crate::result::Result;
 use pulldown_cmark::{html, Options, Parser};
 use scraper::{Html, Selector};
 use serde::Deserialize;
 
-pub fn parse(content: &str) -> Result<Data, Error> {
+pub fn parse(content: &str) -> Result<Data> {
     let (yaml, markdown) = split(content)?;
     let frontmatter = parse_yaml(yaml)?;
     let html_body = parse_markdown(markdown);
@@ -29,11 +31,6 @@ pub struct Data {
     pub summary: Option<String>,
 }
 
-#[derive(Debug)]
-pub enum Error {
-    Frontmatter,
-}
-
 #[derive(Deserialize)]
 struct Frontmatter {
     title: String,
@@ -48,14 +45,14 @@ fn parse_markdown(content: &str) -> String {
     string
 }
 
-fn parse_yaml(content: &str) -> Result<Frontmatter, Error> {
-    serde_yaml::from_str(content).map_err(|_| Error::Frontmatter)
+fn parse_yaml(content: &str) -> Result<Frontmatter> {
+    serde_yaml::from_str(content).map_err(Into::into)
 }
 
-fn split(content: &str) -> Result<(&str, &str), Error> {
+fn split(content: &str) -> Result<(&str, &str)> {
     let segments: Vec<&str> = content.splitn(3, "---\n").collect();
     if segments.len() != 3 {
-        return Err(Error::Frontmatter);
+        return Err(Error::FrontmatterSplit);
     }
     let yaml = segments[1];
     let markdown = segments[2];

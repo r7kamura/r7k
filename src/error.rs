@@ -2,7 +2,9 @@
 pub enum Error {
     ActixPayload(actix_web::error::PayloadError),
     ActixRequest(actix_web::client::SendRequestError),
+    FrontmatterSplit,
     Io(std::io::Error),
+    SerdeYaml(serde_yaml::Error),
     String(std::string::FromUtf8Error),
 }
 
@@ -21,6 +23,12 @@ impl From<actix_web::client::SendRequestError> for Error {
 impl From<std::io::Error> for Error {
     fn from(error: std::io::Error) -> Self {
         Error::Io(error)
+    }
+}
+
+impl From<serde_yaml::Error> for Error {
+    fn from(error: serde_yaml::Error) -> Self {
+        Error::SerdeYaml(error)
     }
 }
 
