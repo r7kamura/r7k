@@ -1,19 +1,15 @@
 name: release
 
 on:
-  release:
-    types:
-      - created
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
-  release:
-    name: release x86_64-unknown-linux-musl
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: rust-build/rust-build.action@v1.2.1
+      - uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUSTTARGET: x86_64-unknown-linux-musl
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
