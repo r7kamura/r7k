@@ -1,17 +1,16 @@
-use crate::error::Error;
+use crate::frontmatter;
 use crate::result::Result;
 use pulldown_cmark::{html, Options, Parser};
 use scraper::{Html, Selector};
 use serde::Deserialize;
 
 pub fn parse(content: &str) -> Result<Data> {
-    let (yaml, markdown) = split(content)?;
-    let frontmatter = parse_yaml(yaml)?;
-    let html_body = parse_markdown(markdown);
-    let title = if frontmatter.title == "~" {
+    let result = frontmatter::parse::<Headers>(content)?;
+    let html_body = parse_markdown(result.body);
+    let title = if result.headers.title == "~" {
         "".to_string()
     } else {
-        frontmatter.title
+        result.headers.title
     };
     let summary = extract_summary(&html_body);
     let image_url = extract_image_url(&html_body);
@@ -32,7 +31,7 @@ pub struct Data {
 }
 
 #[derive(Deserialize)]
-struct Frontmatter {
+struct Headers {
     title: String,
 }
 
@@ -43,21 +42,6 @@ fn parse_markdown(content: &str) -> String {
     let mut string = String::new();
     html::push_html(&mut string, parser);
     string
-}
-
-fn parse_yaml(content: &str) -> Result<Frontmatter> {
-    serde_yaml::from_str(content).map_err(Into::into)
-}
-
-fn split(content: &str) -> Result<(&str, &str)> {
-    let segments: Vec<&str> = content.splitn(3, "---\n").collect();
-    if segments.len() != 3 {
-        return Err(Error::FrontmatterSplit);
-    }
-    let yaml = segments[1];
-    let markdown = segments[2];
-
-    Ok((yaml, markdown))
 }
 
 fn truncate(str: &str, max_characters_count: usize) -> &str {
