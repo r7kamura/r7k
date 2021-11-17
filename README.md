@@ -4,6 +4,10 @@
 
 The tool that powers [r7kamura/r7kamura.com](https://github.com/r7kamura/r7kamura.com).
 
+## Install
+
+Run `cargo install --path .`, or use compiled binary from [Releases](https://github.com/r7kamura/r7k/releases) (Linux only).
+
 ## Usage
 
 ```
