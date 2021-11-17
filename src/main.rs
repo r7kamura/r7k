@@ -9,7 +9,7 @@ mod path_finder;
 mod result;
 mod server;
 
-use crate::opt::Opt;
+use opt::Opt;
 use result::Result;
 use structopt::StructOpt;
 
