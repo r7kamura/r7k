@@ -6,7 +6,13 @@ The tool that powers [r7kamura/r7kamura.com](https://github.com/r7kamura/r7kamur
 
 ## Install
 
-Run `cargo install --path .`, or use compiled binary from [Releases](https://github.com/r7kamura/r7k/releases) (Linux only).
+Run the following command:
+
+```
+cargo install --path .
+```
+
+or use compiled binary from [Releases](https://github.com/r7kamura/r7k/releases) (Linux only).
 
 ## Usage
 
