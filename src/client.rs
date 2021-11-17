@@ -1,3 +1,4 @@
+use crate::result::Result;
 use actix_web::client::Client as ActixClient;
 
 pub struct Client {
@@ -11,9 +12,9 @@ impl Client {
         }
     }
 
-    pub async fn get(&self, path: &str) -> (impl AsRef<[u8]>, String) {
+    pub async fn get(&self, path: &str) -> Result<(impl AsRef<[u8]>, String)> {
         let url = format!("http://localhost:8080{}", path);
-        let mut response = self.actix_client.get(url).send().await.unwrap();
+        let mut response = self.actix_client.get(url).send().await?;
         let headers = response.headers();
         let mut canonical_path = path.to_string();
         if path.ends_with('/') {
@@ -28,6 +29,6 @@ impl Client {
             }
         };
         let body = response.body().limit(10485760).await.unwrap();
-        (body, canonical_path)
+        Ok((body, canonical_path))
     }
 }
