@@ -6,11 +6,7 @@ The tool that powers [r7kamura/r7kamura.com](https://github.com/r7kamura/r7kamur
 
 ## Usage
 
-```console
-$ r7k --help
-r7k 0.1.0
-Powers r7kamura.com.
-
+```
 USAGE:
     r7k <SUBCOMMAND>
 
