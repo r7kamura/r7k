@@ -10,7 +10,7 @@ pub async fn build() -> Result<()> {
     let client = Client::new();
     for path in path_finder::all() {
         println!("{}", path);
-        let (bytes, canonical_path) = client.get(&path).await;
+        let (bytes, canonical_path) = client.get(&path).await?;
         let output_path_string = format!("output{}", canonical_path);
         let output_path: &Path = output_path_string.as_ref();
         if let Some(parent) = output_path.parent() {
