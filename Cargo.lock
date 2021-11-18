@@ -757,6 +757,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "fronma"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6237c8cc87e2f7821c3c59c4353901abd7d2a7f06f537c8eeb385144c405425b"
+dependencies = [
+ "serde",
+ "serde_yaml",
+]
+
+[[package]]
 name = "fuchsia-zircon"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1611,6 +1621,7 @@ dependencies = [
  "actix-web",
  "askama",
  "chrono",
+ "fronma",
  "globwalk",
  "pulldown-cmark",
  "scraper",

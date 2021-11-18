@@ -1,7 +1,6 @@
 mod client;
 mod commands;
 mod error;
-mod frontmatter;
 mod handlers;
 mod models;
 mod opt;
