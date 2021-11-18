@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Use fronma crate to parse frontmatter.
+
 ## 0.2.0 - 2021-11-17
 
 ### Added
