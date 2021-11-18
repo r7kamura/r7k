@@ -1,11 +1,10 @@
-use crate::frontmatter;
 use crate::result::Result;
 use pulldown_cmark::{html, Options, Parser};
 use scraper::{Html, Selector};
 use serde::Deserialize;
 
 pub fn parse(content: &str) -> Result<Data> {
-    let result = frontmatter::parse::<Headers>(content)?;
+    let result = fronma::parser::parse::<Headers>(content)?;
     let html_body = parse_markdown(result.body);
     let title = if result.headers.title == "~" {
         "".to_string()
