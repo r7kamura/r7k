@@ -6,10 +6,7 @@ on:
       - "v*.*.*"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  release:
+    uses: r7kamura/workflows/.github/workflows/github-release.yml@main
+    secrets:
+      github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
