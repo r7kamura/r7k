@@ -1,5 +1,5 @@
 use crate::result::Result;
-use pulldown_cmark::{html, Options, Parser};
+use pulldown_cmark::{html, Event, Options, Parser, Tag};
 use scraper::{Html, Selector};
 use serde::Deserialize;
 
@@ -38,6 +38,22 @@ fn parse_markdown(content: &str) -> String {
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     let parser = Parser::new_ext(content, options);
+    let parser = parser.map(|event| match event {
+        Event::Start(Tag::Link(link_type, url, title)) => {
+            let url = if url.as_ref().starts_with("https://www.amazon.co.jp/dp/") {
+                format!(
+                    "{url}?tag={tracking_id}",
+                    url = url,
+                    tracking_id = "r7kamuracom-22"
+                )
+                .into()
+            } else {
+                url
+            };
+            Event::Start(Tag::Link(link_type, url, title))
+        }
+        _ => event,
+    });
     let mut string = String::new();
     html::push_html(&mut string, parser);
     string
@@ -117,6 +133,15 @@ mod tests {
         let data = result.unwrap();
         assert_eq!(data.title, "".to_string());
         assert_eq!(data.html_body, "<p>body</p>\n".to_string());
+    }
+
+    #[test]
+    fn parse_appends_tracking_id_to_amazon_link() {
+        let content = "---\ntitle:\n---\n[link](https://www.amazon.co.jp/dp/B07L5J1LY9)\n";
+        let result = parse(content);
+        let data = result.unwrap();
+        assert_eq!(data.title, "".to_string());
+        assert_eq!(data.html_body, "<p><a href=\"https://www.amazon.co.jp/dp/B07L5J1LY9?tag=r7kamuracom-22\">link</a></p>\n".to_string());
     }
 
     #[test]
