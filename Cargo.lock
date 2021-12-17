@@ -1615,7 +1615,7 @@ dependencies = [
 
 [[package]]
 name = "r7k"
-version = "0.2.1"
+version = "0.3.0"
 dependencies = [
  "actix-files",
  "actix-web",

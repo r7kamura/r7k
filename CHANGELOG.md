@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0 - 2021-12-18
+
 ### Changed
 
 - Append tracking ID to Amazon.co.jp links.
