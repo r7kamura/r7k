@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Change links order in links page.
+
 ## 0.3.1 - 2021-12-18
 
 ## 0.3.0 - 2021-12-18
