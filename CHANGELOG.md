@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.0 - 2022-01-02
+
 ### Changed
 
 - Change links order in links page.
